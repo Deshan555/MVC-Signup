@@ -15,3 +15,4 @@ $dbname = "register";
 $site_url = 'http://localhost/MVC-SIGNUP/index.php';
 
 $base_url = 'http://localhost/MVC-SIGNUP';
+
