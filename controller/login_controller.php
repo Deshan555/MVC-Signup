@@ -1,24 +1,29 @@
 <?php
 
 include 'models\logIn_Model.php';
-
 class logIn_Controller
 {
     private $login_model;
 
+    // that function basically loads the login model
     public function __construct()
     {
         $this->login_model = new logIn_Model();
     }
     
-
+    // that function basically loads the login page
     public function login()
     {
+        $status_data = "";
+
         require 'views\view_login.php';
+
+        $this->auth();
 
         exit;
     }
 
+    // that function basically authenticates the user
     public function auth()
     {
         $password = $_POST['password'];
@@ -41,15 +46,22 @@ class logIn_Controller
 
                 var_dump($_SESSION['id'], $_SESSION['mail'], $_SESSION['first_name'], $_SESSION['last_name']);
         
-                //header("location: home.php");
+                require 'views\home.php';
+
+                exit;
             }
         }
         else
         {
-            echo "Wrong username or password";
+            $status_data =  "Wrong username or password";
+        
+            require 'views\view_login.php';
+
+            exit;
         }
     }
 
+    
     /*public function logOut()
         {
             include 'models\logIn_Model.php';
