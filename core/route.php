@@ -2,11 +2,15 @@
 
 require 'controller/login_controller.php';
 
+require 'controller/register_controller.php.php';
+
 $URL = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 echo $URL;
 
 $login = new login_controller();
+
+$register = new register_controller();
 
 switch($URL)
 {
@@ -26,7 +30,7 @@ switch($URL)
 
         break;
 
-    /*case '/post/index.php/add':
+    case '/post/index.php/add':
 
         $fetch_post = new fetch_post_controller();
 
@@ -34,7 +38,7 @@ switch($URL)
 
         break;
     
-    case '/post/index.php/view':
+    /*case '/post/index.php/view':
 
         $fetch_post = new fetch_post_controller();
     
