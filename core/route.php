@@ -1,8 +1,10 @@
 <?php
 
+session_start();
+
 require 'controller/login_controller.php';
 
-require 'controller/register_controller.php.php';
+require 'controller/register_controller.php';
 
 $URL = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
@@ -16,10 +18,6 @@ switch($URL)
 {
     case '/MVC-SIGNUP/index.php/login':
             
-        /*$fetch_post = new fetch_post_controller();
-
-        var_dump($fetch_post->FetchAll_PostController());*/
-
         $login->login();
 
         break;
@@ -30,28 +28,31 @@ switch($URL)
 
         break;
 
-    case '/post/index.php/add':
+    case '/MVC-SIGNUP/index.php/signup':
 
-        $fetch_post = new fetch_post_controller();
-
-        $fetch_post->add_Post();
+        $register->register();
 
         break;
     
-    /*case '/post/index.php/view':
+    case '/MVC-SIGNUP/index.php/register':
+        
+        $register->register_process();
 
-        $fetch_post = new fetch_post_controller();
-    
-        $fetch_post->view_Post();
-    
         break;
         
-    case '/post/index.php/login':
+    /*case '/post/index.php/login':
 
         $fetch_post = new fetch_post_controller();
 
         $fetch_post->save_Post();
 
         break;*/
+
+
+    default:
+    
+        $login->home();
+    
+        break;
 
 }
