@@ -21,6 +21,7 @@ class logIn_Controller
         exit;
     }
 
+    
     // that function basically authenticates the user
 
     public function auth()
@@ -65,6 +66,23 @@ class logIn_Controller
                 exit;
             }
         }
+    }
+
+    
+    // that function load home page
+
+    public function home()
+    {
+        require 'views/home.php';
+    }
+    
+    // that function basically destroys the session and logout the user
+
+    public function logout()
+    {
+        session_destroy();
+
+        header('Location: index.php');
     }
 }
 
