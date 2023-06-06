@@ -2,52 +2,35 @@
 
 class register_model
 {
+    private $database;
 
-    private $db;
-
-    private $connection;
+    private $conn;
 
     public function __construct()
     {
-        include 'core\connection.php';
+        require_once 'core/connection.php';
 
-        $this->db = new DB();
+        $this->database = new DB();
 
-        $this->connection = $this->db->DataBase_Connection();
+        $this->conn = $this->database->DataBase_Connection();
     }
 
-
-    // that function check strength of password
-
-    function strength_check($password)
+    function db_write($firstName, $lastName, $mail, $hashPass)
     {
-        $uppercase = preg_match('@[A-Z]@', $password);
+        $pass = md5($hashPass);
 
-        $lowercase = preg_match('@[a-z]@', $password);
+        $stmt = $this->conn->prepare("INSERT INTO users (pwd, First_Name, Last_Name, Email) VALUES (?, ?, ?, ?)");
+        $stmt->bindParam(1, $pass);
+        $stmt->bindParam(2, $firstName);
+        $stmt->bindParam(3, $lastName);
+        $stmt->bindParam(4, $mail);
 
-        $number    = preg_match('@[0-9]@', $password);
-
-        $specialChars = preg_match('@[^\w]@', $password);
-
-        if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-
-            return 0;
+        if ($stmt->execute()) {
+            return 1;
         } else {
-            return 1;
+            return "Error: " . $stmt->errorInfo()[2];
         }
-    }
 
-    
-    // that function check validation of email
-
-    function mail_Validation($email)
-    {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL))
-        {
-            return 1;
-        }else 
-        {
-            return 0;
-        }
+        $stmt->closeCursor();
     }
 }
